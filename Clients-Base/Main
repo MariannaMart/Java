@@ -39,7 +39,7 @@ public class Main {
 
                     name = resultset.getString("Name");
                     email = resultset.getString("Email");
-                    Clients clients = new Clients(name, email);
+                    Reader clients = new Reader(name, email);
 
                     System.out.println(clients); } }
                     if(s.equals("add")) {
