@@ -9,7 +9,7 @@ public class Main {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
 
         while (true) {
 
@@ -23,6 +23,9 @@ public class Main {
             s = scn.nextLine();
 
             if (s.equals("view list")) {
+            
+            try {
+            
                 Driver driver = new FabricMySQLDriver();
                 DriverManager.registerDriver(driver);
 
@@ -41,8 +44,13 @@ public class Main {
                     email = resultset.getString("Email");
                     Reader clients = new Reader(name, email);
 
-                    System.out.println(clients); } }
+                    System.out.println(clients);
+                    } 
+                }catch (SQLException e){
+                System.out.println("This client is already in database");  }  }
                     if(s.equals("add")) {
+
+                      try{
 
                         Driver driver = new FabricMySQLDriver();
                         DriverManager.registerDriver(driver);
@@ -57,7 +65,10 @@ public class Main {
                         statement.execute("insert into clients (Name,Email) values ('" + Name + "'" + "," + "'" + Email + "');");
 
                         System.out.println("New contact succesfully added " + Name + " " + Email);
-
+                        
+                       }catch(SQLException e){
+                        System.out.println("This client is already in database");
+                       }
                     }
                 }
             }
