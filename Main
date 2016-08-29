@@ -1,0 +1,64 @@
+package ClientsBase;
+
+import java.sql.*;
+import java.util.*;
+
+public class Main {
+
+    private static final String URL = "jdbc:mysql://localhost:3306/clientsbase?Reconnection=true&useSSL=false";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "root";
+
+    public static void main(String[] args) throws SQLException {
+
+        while (true) {
+
+            String s;
+            String Name;
+            String Email;
+
+            System.out.println("Type 'add' to add new contact or 'view list' to view contact list");
+            Scanner scn = new Scanner(System.in);
+
+            s = scn.nextLine();
+
+            if (s.equals("view list")) {
+                Driver driver = new FabricMySQLDriver();
+                DriverManager.registerDriver(driver);
+
+                Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                Statement statement = connection.createStatement();
+
+                String query = "select * from clients";
+                ResultSet resultset = statement.executeQuery(query);
+
+                while (resultset.next()) {
+
+                    String name;
+                    String email;
+
+                    name = resultset.getString("Name");
+                    email = resultset.getString("Email");
+                    Clients clients = new Clients(name, email);
+
+                    System.out.println(clients); } }
+                    if(s.equals("add")) {
+
+                        Driver driver = new FabricMySQLDriver();
+                        DriverManager.registerDriver(driver);
+
+                        Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                        Statement statement = connection.createStatement();
+
+                        System.out.println("Please type a name");
+                        Name = scn.nextLine();
+                        System.out.println("Please type a email");
+                        Email = scn.nextLine();
+                        statement.execute("insert into clients (Name,Email) values ('" + Name + "'" + "," + "'" + Email + "');");
+
+                        System.out.println("New contact succesfully added " + Name + " " + Email);
+
+                    }
+                }
+            }
+        }
