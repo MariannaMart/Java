@@ -1,0 +1,18 @@
+package ClientsBase;
+
+public class Reader {
+    String name;
+    String email;
+
+    public Reader(){}
+    public Reader(String name,String email){
+
+        this.name = name;
+        this.email = email;
+    }
+
+    @Override
+    public String toString(){
+        return name + " " + email;
+    }
+}
